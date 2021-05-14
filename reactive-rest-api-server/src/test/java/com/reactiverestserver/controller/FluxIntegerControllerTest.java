@@ -24,7 +24,7 @@ class FluxIntegerControllerTest {
     public void fluxEndpointTest(){
 
         Flux<Integer> integerFlux = webTestClient.get().uri("/flux")
-                .accept(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_NDJSON)
                 .exchange()
                 .expectStatus().isOk()
                 .returnResult(Integer.class)
@@ -38,20 +38,12 @@ class FluxIntegerControllerTest {
                 .expectNext(4)
                 .verifyComplete();
 
-        webTestClient.get().uri("/flux")
-                .accept(MediaType.APPLICATION_JSON)
-                .exchange()
-                .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectBodyList(Integer.class)
-                .hasSize(4);
-
 
         List<Integer> expectedIntegerList = Arrays.asList(1,2,3,4);
 
         EntityExchangeResult<List<Integer>> entityExchangeResult = webTestClient
                 .get().uri("/flux")
-                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_NDJSON)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Integer.class)
@@ -63,6 +55,17 @@ class FluxIntegerControllerTest {
         assertEquals(expectedIntegerList,entityExchangeResult.getResponseBody());
 
 
+    }
+
+    @Test
+    void fluxEndpointSizeResponseTest() {
+        webTestClient.get().uri("/flux")
+                .accept(MediaType.APPLICATION_NDJSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
+                .expectBodyList(Integer.class)
+                .hasSize(4);
     }
 
     @Test
