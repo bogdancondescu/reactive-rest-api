@@ -10,11 +10,13 @@ import java.time.Duration;
 @RestController
 public class FluxIntegerController {
 
-    @GetMapping("/flux")
+    @GetMapping(value ="/flux", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<Integer> returnFlux(){
 
-        return Flux.just(1,2,3,4)
+        return Flux.just(1,2,3,4,6,7)
                 .delayElements(Duration.ofSeconds(1))
+                .concatWith(Flux.error(new RuntimeException("Exception Occurred!")))
+                .onErrorResume(err -> Flux.empty())
                 .log();
     }
 
