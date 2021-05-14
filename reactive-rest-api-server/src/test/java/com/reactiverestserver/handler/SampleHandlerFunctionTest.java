@@ -1,4 +1,4 @@
-package com.reactiverestserver.reactiverestapiserver.handler;
+package com.reactiverestserver.handler;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

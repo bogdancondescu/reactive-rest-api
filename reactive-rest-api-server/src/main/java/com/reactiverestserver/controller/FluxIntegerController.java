@@ -1,4 +1,4 @@
-package com.reactiverestserver.reactiverestapiserver.controller;
+package com.reactiverestserver.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

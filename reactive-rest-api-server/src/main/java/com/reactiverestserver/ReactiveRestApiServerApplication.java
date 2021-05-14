@@ -1,4 +1,4 @@
-package com.reactiverestserver.reactiverestapiserver;
+package com.reactiverestserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

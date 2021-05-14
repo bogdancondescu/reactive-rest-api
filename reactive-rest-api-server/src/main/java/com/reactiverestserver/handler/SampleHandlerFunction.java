@@ -1,4 +1,4 @@
-package com.reactiverestserver.reactiverestapiserver.handler;
+package com.reactiverestserver.handler;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
-package com.reactiverestserver.reactiverestapiserver.router;
+package com.reactiverestserver.router;
 
-import com.reactiverestserver.reactiverestapiserver.handler.SampleHandlerFunction;
+import com.reactiverestserver.handler.SampleHandlerFunction;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
