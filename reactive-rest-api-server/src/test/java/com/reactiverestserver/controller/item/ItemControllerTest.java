@@ -55,7 +55,7 @@ public class ItemControllerTest {
         webTestClient.get().uri("/items")
                 .exchange()
                 .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
                 .expectBodyList(Item.class)
                 .hasSize(4);
     }
@@ -65,7 +65,7 @@ public class ItemControllerTest {
         webTestClient.get().uri("/items")
                 .exchange()
                 .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
                 .expectBodyList(Item.class)
                 .hasSize(4)
         .consumeWith((response) -> {
@@ -84,7 +84,7 @@ public class ItemControllerTest {
         Flux<Item> itemsFlux = webTestClient.get().uri("/items")
                 .exchange()
                 .expectStatus().isOk()
-                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
                 .returnResult(Item.class)
                 .getResponseBody();
 
@@ -135,6 +135,10 @@ public class ItemControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody(Void.class);
+
+        Mono<Item> abc = itemReactiveRepository.findById("ABC");
+
+        StepVerifier.create(abc).expectSubscription().expectNextCount(0).verifyComplete();
     }
 
     @Test

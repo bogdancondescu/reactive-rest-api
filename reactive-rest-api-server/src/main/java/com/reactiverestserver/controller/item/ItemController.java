@@ -5,10 +5,13 @@ import com.reactiverestserver.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.Duration;
 
 @RestController
 @Slf4j
@@ -18,9 +21,9 @@ public class ItemController {
 
     private final ItemService service;
 
-    @GetMapping()
+    @GetMapping(produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<Item> getAllItems(){
-       return service.findAllItems();
+       return service.findAllItems().delayElements(Duration.ofSeconds(1));
     }
 
     @GetMapping("/{id}")
