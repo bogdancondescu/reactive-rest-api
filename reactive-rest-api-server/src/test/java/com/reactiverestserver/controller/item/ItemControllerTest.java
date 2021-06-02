@@ -40,7 +40,7 @@ public class ItemControllerTest {
 
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         itemReactiveRepository.deleteAll()
                 .thenMany(Flux.fromIterable(data()))
                 .flatMap(itemReactiveRepository::save)
@@ -51,7 +51,7 @@ public class ItemControllerTest {
     }
 
     @Test
-    public void getAllItems(){
+    public void getAllItems() {
         webTestClient.get().uri("/items")
                 .exchange()
                 .expectStatus().isOk()
@@ -61,25 +61,24 @@ public class ItemControllerTest {
     }
 
     @Test
-    public void getAllItems_approach2(){
+    public void getAllItems_approach2() {
         webTestClient.get().uri("/items")
                 .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_NDJSON)
                 .expectBodyList(Item.class)
                 .hasSize(4)
-        .consumeWith((response) -> {
-             List<Item> items =  response.getResponseBody();
-            items.forEach((item) -> {
-                assertTrue(item.getId()!=null);
-            });
+                .consumeWith((response) -> {
+                    List<Item> items = response.getResponseBody();
+                    items.forEach((item) -> {
+                        assertTrue(item.getId() != null);
+                    });
 
-        });
+                });
     }
 
     @Test
-    public void getAllItems_approach3(){
-
+    public void getAllItems_approach3() {
 
         Flux<Item> itemsFlux = webTestClient.get().uri("/items")
                 .exchange()
@@ -94,9 +93,9 @@ public class ItemControllerTest {
     }
 
     @Test
-    public void getOneItem(){
+    public void getOneItem() {
 
-        webTestClient.get().uri("/items/{id}","ABC")
+        webTestClient.get().uri("/items/{id}", "ABC")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
@@ -104,15 +103,15 @@ public class ItemControllerTest {
     }
 
     @Test
-    public void getOneItem_notFound(){
+    public void getOneItem_notFound() {
 
-        webTestClient.get().uri("/items/{id}","DEF")
+        webTestClient.get().uri("/items/{id}", "DEF")
                 .exchange()
                 .expectStatus().isNotFound();
     }
 
     @Test
-    public void createItem(){
+    public void createItem() {
 
         Item item = new Item(null, "Iphone X", 999.99);
 
@@ -128,9 +127,9 @@ public class ItemControllerTest {
     }
 
     @Test
-    public void deleteItem(){
+    public void deleteItem() {
 
-        webTestClient.delete().uri("/items/{id}","ABC")
+        webTestClient.delete().uri("/items/{id}", "ABC")
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -142,26 +141,26 @@ public class ItemControllerTest {
     }
 
     @Test
-    public void updateItem(){
-        double newPrice =129.99;
-        Item item = new Item(null,"Beats HeadPhones", newPrice);
+    public void updateItem() {
+        double newPrice = 129.99;
+        Item item = new Item(null, "Beats HeadPhones", newPrice);
 
-        webTestClient.put().uri("/items/{id}","ABC")
+        webTestClient.put().uri("/items/{id}", "ABC")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(item), Item.class)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$.price",newPrice);
+                .jsonPath("$.price", newPrice);
     }
 
     @Test
-    public void updateItem_notFound(){
-        double newPrice =129.99;
-        Item item = new Item(null,"Beats HeadPhones", newPrice);
+    public void updateItem_notFound() {
+        double newPrice = 129.99;
+        Item item = new Item(null, "Beats HeadPhones", newPrice);
 
-        webTestClient.put().uri("/items/{id}","DEF")
+        webTestClient.put().uri("/items/{id}", "DEF")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .body(Mono.just(item), Item.class)

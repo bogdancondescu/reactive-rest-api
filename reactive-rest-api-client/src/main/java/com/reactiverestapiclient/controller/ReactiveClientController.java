@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
-import java.util.List;
-
-
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -22,13 +19,13 @@ public class ReactiveClientController {
     public Flux<Integer> getAllItemsUsingRetrieve() {
 
         Flux<Integer> integerFlux = reactiveClientService.retrieveIntegerFlux();
-
         integerFlux.subscribe(k -> {
             log.info(k.toString());
         }, err -> {
-            log.error("Exception occurred: " + err.toString());
+            log.error(err.toString());
+        }, () -> {
+            log.info("complete");
         });
-
 
         return integerFlux;
     }

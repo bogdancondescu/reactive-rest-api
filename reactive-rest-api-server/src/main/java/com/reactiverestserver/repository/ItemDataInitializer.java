@@ -23,10 +23,9 @@ import java.util.List;
 public class ItemDataInitializer implements CommandLineRunner {
 
     private final ItemReactiveRepository itemReactiveRepository;
-    private final ReactiveMongoOperations mongoOperations;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
 
         initialDataSetUp();
     }

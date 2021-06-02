@@ -8,7 +8,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@WebFluxTest
+@WebFluxTest(MonoIntegerController.class)
 class MonoIntegerControllerTest {
 
     @Autowired

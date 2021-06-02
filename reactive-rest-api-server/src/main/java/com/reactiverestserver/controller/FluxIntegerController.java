@@ -16,24 +16,20 @@ import java.time.Duration;
 @Slf4j
 public class FluxIntegerController {
 
-    private final ItemReactiveRepository itemReactiveRepository;
-
     @GetMapping(value ="/flux", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<Integer> returnFlux(){
-
-        Flux<Item> all = itemReactiveRepository.findAll();
-
-//        all.subscribe(k -> log.info(k.toString()));
 
         return Flux.just(1,2,3,4)
                 .delayElements(Duration.ofSeconds(1))
                 .concatWith(Flux.error(new RuntimeException("Exception Occurred!")))
+                .concatWith(Flux.just(5,6))
                 .onErrorResume(err -> Flux.empty())
                 .log();
     }
 
     @GetMapping(value = "/fluxstream", produces = MediaType.APPLICATION_NDJSON_VALUE)
     public Flux<Long> returnFluxStream(){
+
 
         return Flux.interval(Duration.ofSeconds(1))
                 .log();

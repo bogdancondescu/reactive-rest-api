@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@WebFluxTest
+@WebFluxTest(FluxIntegerController.class)
 class FluxIntegerControllerTest {
 
     @Autowired
